@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color="dark" fill="clear">
+        <ion-icon name="search-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      <img style="width: 35px;" src="assets/icon/smartphone.svg" alt="Icon"> Funds
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list *ngIf="values.length==0">
+    <ion-item>
+      <ion-label>
+        No values entered yet.
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+  <ion-list *ngIf="values">
+    <ion-card *ngFor="let item of values; let i = index;">
+      <ion-card-header>
+        <ion-row>
+          <ion-col>
+            <ion-card-subtitle>
+              {{item.date | date:'dd/MM/yy'}} - {{item.time}}
+
+            </ion-card-subtitle>
+          </ion-col>
+          <ion-col style="    text-align: end;">
+            <ion-button size="small" fill="clear" color="primary" (click)="crudValues(item.type,item)">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+            <ion-button size="small" fill="clear" color="danger" (click)="delAlert(item)">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+      </ion-card-header>
+
+      <ion-card-content>
+        {{item.description}}
+      </ion-card-content>
+      <ion-card-header>
+        <ion-card-title style="text-align: end;" *ngIf="item.type=='Add'" color="success">
+          <ion-icon name="add-outline"></ion-icon>
+          {{item.value | currency:'BRL'}}
+        </ion-card-title>
+
+        <ion-card-title style="text-align: end;" *ngIf="item.type=='Sub'" color="danger">
+          <ion-icon name="remove-outline"></ion-icon>
+          {{item.value | currency:'BRL'}}
+        </ion-card-title>
+      </ion-card-header>
+    </ion-card>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item>
+      <ion-label>Add</ion-label>
+      <ion-input style="
+      text-align: end;
+      " name="add" value="{{calcAdd() | currency:'BRL'}}" readonly></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Sub</ion-label>
+      <ion-input style="
+      text-align: end;
+      " name="sub" value="- {{calcSub()| currency:'BRL'}}" readonly></ion-input>
+
+    </ion-item>
+    <ion-item>
+      <ion-label>Total</ion-label>
+      <ion-input style="
+          text-align: end;
+    font-weight: bold;
+      " name="total" value="{{calcTotal()| currency:'BRL'}}" readonly></ion-input>
+    </ion-item>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button color="success" expand="block" (click)="crudValues('Add')">
+            <ion-icon name="add-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button color="danger" expand="block" (click)="crudValues('Sub')">
+            <ion-icon name="remove-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

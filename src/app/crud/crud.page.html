@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color="dark" (click)="close()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{type}} Value</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Type</ion-label>
+      <ion-select placeholder="Select One" [(ngModel)]="value.type" name="type">
+        <ion-select-option value="Add">Add</ion-select-option>
+        <ion-select-option value="Sub">Sub</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Value</ion-label>
+      <ion-input type="number" [(ngModel)]="value.value" name="value"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Date</ion-label>
+      <ion-input type="date" [(ngModel)]="value.date" name="date"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Hour</ion-label>
+      <ion-input type="time" [(ngModel)]="value.time" name="time" (change)="logIt($event.target.value)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Category</ion-label>
+      <ion-select placeholder="Select One" [(ngModel)]="value.category" name="category">
+        <ion-select-option *ngFor="let t of types" value="{{t.value}}">{{t.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="value.category=='other'">
+      <ion-label position="floating">Other</ion-label>
+      <ion-input [(ngModel)]="value.newCategory" name="newCategory" placeholder="New category"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea [(ngModel)]="value.description" name="description" placeholder="Write a description"></ion-textarea>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngIf="!value.id">
+          <ion-button color="success" expand="block" (click)="save()">
+            Save
+          </ion-button>
+        </ion-col>
+        <ion-col *ngIf="value.id">
+          <ion-button color="primary" expand="block" (click)="update()">
+            Update
+          </ion-button>
+        </ion-col>
+        <ion-col *ngIf="value.id">
+          <ion-button color="danger" expand="block" (click)="delAlert()">
+            Delete
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button color="dark" expand="block" (click)="close()">
+            Cancel
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
